@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CatGPT</title>
+</head>
+<body>
+<form
+        enctype="multipart/form-data"
+        action="/"
+        method="post"
+>
+    <input type="file" name="photo" />
+    <input type="submit" value="upload" />
+</form>
+<div>{{ .Error }}</div>
+{{ if .Photo }}<div><img src="data:image/jpg;base64, {{ .Photo }}"/></div>{{ end }}
+</body>
+</html>
