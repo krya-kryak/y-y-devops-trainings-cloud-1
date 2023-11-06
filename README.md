@@ -42,9 +42,17 @@ http_response_count{code="200",handler="/ping",method="get"} 2
 * Прежде всего нужно залогиниться под своим аккаунтом и форкнуть себе репозиторий. В нём лежат исходники и terraform-инкструкция для разворачивания MVP 
 
 
-* Написать Dockerfile. Приложение написано на go и собирается стандартным go build. В качестве базового образа для рантайма рекомендуем использовать `gcr.io/distroless/static-debian12`
+* Написать Dockerfile. Приложение написано на go и собирается стандартным тулчейном:
+    ```
+    $ go mod download
+    $ CGO_ENABLED=0 go build -o path/to/resulting/binary
+    ```
+
+    В качестве базового образа для сборки в docker рекомендуем использовать `golang:1.21`; в качестве базового образа для рантайма - `gcr.io/distroless/static-debian12:latest-amd64`
 
     https://go.dev/doc/tutorial/compile-install
+
+    https://hub.docker.com/_/golang
 
     https://github.com/GoogleContainerTools/distroless
 
