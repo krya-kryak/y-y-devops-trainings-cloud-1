@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  catgpt:
+    container_name: catgpt
+    build: .
+    restart: always
+    network_mode: "host"
+    ports:
+      - 8080:8080
+      - 9090:9090
