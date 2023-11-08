@@ -4,3 +4,4 @@ WORKDIR /app
 COPY . .
 RUN pwd
 RUN ls -la
+RUN make build
