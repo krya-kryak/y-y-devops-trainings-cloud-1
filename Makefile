@@ -1,4 +1,7 @@
 dep: ## Download the dependencies.
+	cd ./catgpt
+	pwd
+	ls -la
 	go mod download
 
 build: dep ## Build catgpt executable.
