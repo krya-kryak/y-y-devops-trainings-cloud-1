@@ -99,7 +99,7 @@ https://cloud.yandex.ru/marketplace/products/yc/container-optimized-image
 
 ## После того, как стенд готов
 * Построить в Yandex Monitoring графики, на которых для сервиса в целом можно будет посмотреть следующее:
-    * Разбивку по типам нарисованных котивов (дневных и ночных)
+    * Разбивку по типам нарисованных котиков (дневных и ночных)
     * Разбивку по кодам ответов, хендлерам и методам
 https://cloud.yandex.ru/docs/monitoring/quickstart
 
