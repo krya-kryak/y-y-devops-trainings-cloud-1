@@ -6,3 +6,4 @@ build: dep ## Build catgpt executable.
 
 docker-build: ## Build docker image
 	docker build .
+	docker image prune --force --filter label=stage=intermediate
