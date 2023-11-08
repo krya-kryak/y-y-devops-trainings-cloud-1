@@ -18,7 +18,7 @@ jobs:
         with:
           # https://docs.github.com/en/actions/learn-github-actions/variables
           registry: ${{ vars.REGISTRY }}
-          username: auth
+          username: oauth
           password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Build and push Docker image
