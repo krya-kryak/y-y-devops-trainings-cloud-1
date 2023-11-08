@@ -1,0 +1,6 @@
+name: catgpt-github-actions
+run-name: ${{ github.actor }} is building catgpt
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
