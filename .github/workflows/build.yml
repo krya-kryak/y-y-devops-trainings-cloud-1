@@ -26,4 +26,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: catgpt:latest
+          tags: ${{ vars.REGISTRY }}/${{ vars.YA_REGISTRY_ID }}/catgpt:latest
