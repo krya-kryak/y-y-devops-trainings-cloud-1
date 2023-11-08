@@ -19,7 +19,7 @@ jobs:
           # https://docs.github.com/en/actions/learn-github-actions/variables
           registry: ${{ vars.REGISTRY }}
           username: oauth
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.YA_OAUTH_TOKEN }}
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
