@@ -28,7 +28,7 @@ resource "yandex_container_registry" "registry1" {
 locals {
   folder_id = "b1g72ja3gj83ksl68q3h"
   service-accounts = toset([
-    "sagrityanin", 
+    "sagrityanin1", 
   ])
   catgpt-sa-roles = toset([
     "container-registry.images.puller",
@@ -42,7 +42,7 @@ resource "yandex_iam_service_account" "service-accounts" {
 resource "yandex_resourcemanager_folder_iam_member" "catgpt-roles" {
   for_each  = local.catgpt-sa-roles
   folder_id = local.folder_id
-  member    = "serviceAccount:${yandex_iam_service_account.service-accounts["sagrityanin"].id}"
+  member    = "serviceAccount:${yandex_iam_service_account.service-accounts["sagrityanin1"].id}"
   role      = each.key
 }
 
@@ -51,7 +51,7 @@ data "yandex_compute_image" "coi" {
 }
 resource "yandex_compute_instance" "catgpt-1" {
     platform_id        = "standard-v2"
-    service_account_id = yandex_iam_service_account.service-accounts["sagrityanin"].id
+    service_account_id = yandex_iam_service_account.service-accounts["sagrityanin1"].id
     resources {
       cores         = 2
       memory        = 1

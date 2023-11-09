@@ -25,3 +25,4 @@ terraform/.terraform/providers/registry.terraform.io/yandex-cloud/yandex/0.102.0
 terraform/.terraform.lock.hcl
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
+terraform/.terraform.tfstate.lock.info
