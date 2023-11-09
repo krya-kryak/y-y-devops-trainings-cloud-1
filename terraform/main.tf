@@ -33,6 +33,7 @@ locals {
   catgpt-sa-roles = toset([
     "container-registry.images.puller",
     "monitoring.editor",
+    "container-registry.images.pusher",
   ])
 }
 resource "yandex_iam_service_account" "service-accounts" {
