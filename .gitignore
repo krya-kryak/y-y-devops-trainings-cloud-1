@@ -19,3 +19,9 @@
 
 # Go workspace file
 go.work
+terraform/sagrityanin-key.json
+terraform/tf_key.json
+terraform/.terraform/providers/registry.terraform.io/yandex-cloud/yandex/0.102.0/linux_amd64/terraform-provider-yandex_v0.102.0
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
