@@ -4,7 +4,7 @@ cat tf_key.json | docker login \
   --password-stdin \
   cr.yandex
 
-docker push cr.yandex/crpvspuovr90bujnc8qc/catgpt:myapp
+docker push cr.yandex/crpv6r68t3c0m747mm4h/catgpt:myapp
 
-docker build . -t cr.yandex/crpvspuovr90bujnc8qc
+docker build . -t cr.yandex/crpv6r68t3c0m747mm4h/catgpt:myapp
 
