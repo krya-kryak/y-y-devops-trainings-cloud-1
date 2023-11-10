@@ -37,7 +37,7 @@ locals {
 }
 resource "yandex_iam_service_account" "service-accounts" {
   for_each = local.service-accounts
-  name     = each.key
+  name     = "${local.folder_id}-${each.key}"
 }
 resource "yandex_resourcemanager_folder_iam_member" "catgpt-roles" {
   for_each  = local.catgpt-sa-roles
