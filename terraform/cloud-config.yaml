@@ -1,0 +1,15 @@
+#cloud-config
+write_files:
+- content: |
+    # My new /etc/sysconfig/samba file
+    routes:
+      - input:
+          plugin: metrics_pull
+          config:
+            url: http://localhost:9090/metrics
+            format:
+              prometheus: {}
+        channel:
+          channel_ref:
+            name: cloud_monitoring
+  path: /ua/prometheus.yml

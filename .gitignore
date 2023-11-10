@@ -19,3 +19,8 @@
 
 # Go workspace file
 go.work
+
+terraform/tf_key.json
+terraform/.terraform
+terraform/.terraform.*
+terraform/terraform.tfstate*
