@@ -1,8 +1,10 @@
 name: Publish Docker image
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - 'testing-ci'
+      - 'main'
 
 jobs:
   push_to_registry:
@@ -19,17 +21,9 @@ jobs:
           username: json_key
           password: ${{ secrets.REG_PASSWORD }}
       
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: crp14hfvk0dogpduu1te/catgpt
-      
       - name: Build and push Docker image
         uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
         with:
-          context: .
-          file: ./catgpt/Dockerfile
+          context: ./catgpt
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: crp14hfvk0dogpduu1te/catgpt:latest
