@@ -8,15 +8,15 @@ terraform {
 }
 
 provider "yandex" {
-  service_account_key_file = "./tf_key.json"
+  service_account_key_file = "./key.json"
   folder_id                = local.folder_id
-  zone                     = "ru-central1-a"
+  zone                     = "ru-central1-b"
 }
 
 resource "yandex_vpc_network" "foo" {}
 
 resource "yandex_vpc_subnet" "foo" {
-  zone           = "ru-central1-a"
+  zone           = "ru-central1-b"
   network_id     = yandex_vpc_network.foo.id
   v4_cidr_blocks = ["10.5.0.0/24"]
 }
@@ -26,7 +26,7 @@ resource "yandex_container_registry" "registry1" {
 }
 
 locals {
-  folder_id = "<INSERT YOUR FOLDER ID>"
+  folder_id = "b1ghjkdjfbkk3127pe4a"
   service-accounts = toset([
     "catgpt-sa",
   ])
@@ -50,31 +50,30 @@ data "yandex_compute_image" "coi" {
   family = "container-optimized-image"
 }
 resource "yandex_compute_instance" "catgpt-1" {
-    platform_id        = "standard-v2"
-    service_account_id = yandex_iam_service_account.service-accounts["catgpt-sa"].id
-    resources {
-      cores         = 2
-      memory        = 1
-      core_fraction = 5
+  platform_id        = "standard-v2"
+  service_account_id = yandex_iam_service_account.service-accounts["catgpt-sa"].id
+  resources {
+    cores         = 2
+    memory        = 1
+    core_fraction = 5
+  }
+  scheduling_policy {
+    preemptible = true
+  }
+  network_interface {
+    subnet_id = yandex_vpc_subnet.foo.id
+    nat       = true
+  }
+  boot_disk {
+    initialize_params {
+      type     = "network-hdd"
+      size     = "30"
+      image_id = data.yandex_compute_image.coi.id
     }
-    scheduling_policy {
-      preemptible = true
-    }
-    network_interface {
-      subnet_id = "${yandex_vpc_subnet.foo.id}"
-      nat = true
-    }
-    boot_disk {
-      initialize_params {
-        type = "network-hdd"
-        size = "30"
-        image_id = data.yandex_compute_image.coi.id
-      }
-    }
-    metadata = {
-      docker-compose = file("${path.module}/docker-compose.yaml")
-      ssh-keys  = "ubuntu:${file("~/.ssh/devops_training.pub")}"
-    }
+  }
+  metadata = {
+    docker-compose = file("${path.module}/docker-compose.yaml")
+    ssh-keys       = "ubuntu:${file("~/.ssh/devops_training.pub")}"
+  }
 }
-
 

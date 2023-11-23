@@ -21,5 +21,6 @@
 go.work
 
 # Manually ignored files
+ci_key.json
 terraform/key.json
 terraform/.terraform*
