@@ -19,3 +19,7 @@
 
 # Go workspace file
 go.work
+
+# Manually ignored files
+terraform/key.json
+terraform/.terraform*
