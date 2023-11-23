@@ -26,4 +26,4 @@ jobs:
         with:
           context: ./catgpt
           push: true
-          tags: crp14hfvk0dogpduu1te/catgpt:latest
+          tags: cr.yandex/crp14hfvk0dogpduu1te/catgpt:latest
