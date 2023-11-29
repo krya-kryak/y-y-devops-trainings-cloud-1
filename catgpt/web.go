@@ -52,6 +52,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	file, _, err := r.FormFile("photo")
 	if err != nil {
 		id.Error = err
+		indexTpl.Execute(w, id)
 		return
 	}
 	defer file.Close()
@@ -59,6 +60,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	img, err = defaultGPT.EnsureIsImage(file)
 	if err != nil {
 		id.Error = err
+		indexTpl.Execute(w, id)
 		return
 	}
 	catType := CatDiurnal
@@ -69,12 +71,14 @@ func index(w http.ResponseWriter, r *http.Request) {
 	enhanced, err = defaultGPT.Enhance(img, catType)
 	if err != nil {
 		id.Error = err
+		indexTpl.Execute(w, id)
 		return
 	}
 	var enhancedBytes []byte
 	enhancedBytes, err = io.ReadAll(enhanced)
 	if err != nil {
 		id.Error = err
+		indexTpl.Execute(w, id)
 		return
 	}
 
@@ -83,6 +87,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	_, err = encoder.Write(enhancedBytes)
 	if err != nil {
 		id.Error = err
+		indexTpl.Execute(w, id)
 		return
 	}
 	encoder.Close()

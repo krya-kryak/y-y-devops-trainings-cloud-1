@@ -1,0 +1,59 @@
+name: Docker deploy
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+env:
+  CR_REGISTRY: crp39iivaksh2rut9bvi
+  CR_REPOSITORY: catgpt
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  build:
+    runs-on: ubuntu:latest
+    strategy:
+      fail-fast: false
+      matrix:
+        work_dir:
+          - ./catgpt
+
+    steps:
+      - name: Clone repository to github actions
+        uses: actions/checkout@v2
+
+      - name: Login (Yandex Cloud)
+        id: login-cr
+        uses: yc-actions/yc-cr-login@v1
+        with:
+          yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
+
+      - name: Build image (Yandex Cloud)
+        run: |
+          docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG .
+          docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+
+      - name: Connect to VM via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: 158.160.108.71
+          username: ubuntu
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
+
+      - name: Run commands on VM
+        run: |
+          echo ${{ secrets.YC_SA_JSON_CREDENTIALS }} | docker login \
+          --username json_key \
+          --password-stdin \
+          cr.yandex
+          
+          if [ "$(docker ps -q)" ]; then
+            sudo docker kill $(docker ps -q) &> /dev/null
+          fi
+          if [ "$(docker ps -a -q)" ]; then
+            sudo docker kill $(docker ps -a -q) &> /dev/null
+          fi
+          docker run -dp 80:8080 cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
