@@ -23,7 +23,7 @@ jobs:
             -
                 name: Login to Yandex Cloud Container Registry
                 id: login-cr
-                uses: yc-actions/yc-cr-login@v3
+                uses: yc-actions/yc-cr-login@v2.0.0
                 with:
                     yc-sa-id: ${{ env.SA_ID }}
             -
