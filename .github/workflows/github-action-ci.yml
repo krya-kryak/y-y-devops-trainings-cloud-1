@@ -1,0 +1,38 @@
+name: build and push to registry
+
+on:
+    push:
+        branches: ['release']
+
+    workflow_dispatch:
+
+env:
+    FOLDER_ID: ${{ secrets.FOLDER_ID }}
+    SA_ID: ${{ secrets.SA_ID }}
+
+jobs:
+    build_and_push_registry:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+            attestations: write
+            id-token: write
+        
+        steps:
+            -
+                name: Login to Yandex Cloud Container Registry
+                id: login-cr
+                uses: yc-actions/yc-cr-login@v3
+                with:
+                    yc-sa-id: ${{ env.SA_ID }}
+            -
+                name: Build, tag, and push image to Yandex Cloud Container Registry
+                env:
+                 CR_REGISTRY_ID: ${{ secrets.REGISTRY_ID }}
+                 CR_REPOSITORY: catgpt
+                 IMAGE_TAG: ${{ github.sha }}
+                run: |
+                    docker build -t cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG ./catgpt
+                    docker push cr.yandex/$CR_REGISTRY/$CR_REPOSITORY:$IMAGE_TAG
+                

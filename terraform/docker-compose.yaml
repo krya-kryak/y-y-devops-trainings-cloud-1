@@ -2,6 +2,8 @@ version: '3.7'
 services:
   catgpt:
     container_name: catgpt
-    image: "cr.yandex/<INSERT_YOUR_IMAGE_TAG_HERE>"
+    image: "cr.yandex/${REGISTRY_ID}/catgpt"
     restart: always
     network_mode: "host"
+    environment:
+      - REGISTRY_ID=${REGISTRY_ID}
